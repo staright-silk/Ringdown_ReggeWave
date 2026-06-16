@@ -25,6 +25,9 @@ k = 2 * np.pi * np.fft.fftfreq(N, d=dr)
 # --------------------------
 # Time Parameters
 # --------------------------
+hawking_temperature=0.15 #hawking radiation
+radiation_width=3.0
+hawking_mask= (r>=rs) & (r <= rs + radiqation_width)
 dt = 0.005
 total_steps = 4000
 plot_interval = 20
@@ -187,7 +190,7 @@ for step in range(total_steps):
 
     # First half potential step
     psi *= U_V
-
+    
     # Momentum space
     psi_k = np.fft.fft(psi)
 
@@ -199,7 +202,8 @@ for step in range(total_steps):
 
     # Second half potential step
     psi *= U_V
-
+    noise = np.zeros_like(psi, dtype=complex)
+    random_amplitude=
     # Surviving probability
     P = np.sum(
         np.abs(psi)**2
