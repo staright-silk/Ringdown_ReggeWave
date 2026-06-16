@@ -27,7 +27,7 @@ k = 2 * np.pi * np.fft.fftfreq(N, d=dr)
 # --------------------------
 hawking_temperature=0.15 #hawking radiation
 radiation_width=3.0
-hawking_mask= (r>=rs) & (r <= rs + radiqation_width)
+hawking_mask= (r>=rs) & (r <= rs + radiation_width)
 dt = 0.005
 total_steps = 4000
 plot_interval = 20
