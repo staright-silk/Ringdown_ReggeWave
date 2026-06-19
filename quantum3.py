@@ -203,7 +203,6 @@ for step in range(total_steps):
     # Second half potential step
     psi *= U_V
     noise = np.zeros_like(psi, dtype=complex)
-    random_amplitude=
     # Surviving probability
     P = np.sum(
         np.abs(psi)**2
