@@ -1,14 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
-# ==========================================================
-# Quantum Wave Packet Falling into a Black-Hole-Like Potential
-# Corrected & Stable Version (No FFT wrap-around artifacts)
-# ==========================================================
-
-# --------------------------
-# Physical Parameters
-# --------------------------
 rs = 2.0                  # Schwarzschild radius
 L = 100.0                 # Box size
 N = 4096                  # Grid points
@@ -22,9 +13,6 @@ dr = r[1] - r[0]
 # Momentum grid
 k = 2 * np.pi * np.fft.fftfreq(N, d=dr)
 
-# --------------------------
-# Time Parameters
-# --------------------------
 hawking_temperature=0.15 #hawking radiation
 radiation_width=3.0
 hawking_mask= (r>=rs) & (r <= rs + radiation_width)
@@ -32,16 +20,10 @@ dt = 0.005
 total_steps = 4000
 plot_interval = 20
 
-# --------------------------
-# Paczynski-Wiita Potential
-# --------------------------
-# Small regularization instead of hard clipping
 eps = 0.01
 V = -1.0 / (r - rs + eps)
 
-# --------------------------
-# Smooth Absorbing Layer
-# --------------------------
+
 W = np.zeros_like(r)
 
 # Left absorber (near horizon)
@@ -70,9 +52,6 @@ x_right = (
 
 W[mask_right] = 60.0 * x_right**2
 
-# --------------------------
-# Initial Wave Packet
-# --------------------------
 r0 = 30.0
 sigma = 2.0
 p0 = -2.5
@@ -93,9 +72,7 @@ print(
     f"{np.sum(np.abs(psi)**2)*dr:.12f}"
 )
 
-# --------------------------
-# Split Operator Factors
-# --------------------------
+
 V_eff = V - 1j * W
 
 U_V = np.exp(
@@ -108,9 +85,7 @@ U_K = np.exp(
     -1j * kinetic * dt
 )
 
-# --------------------------
-# Visualization Setup
-# --------------------------
+
 plt.ion()
 
 fig, (ax1, ax2) = plt.subplots(
@@ -177,15 +152,11 @@ ax2.set_ylim(
 ax2.set_xlabel("Time")
 ax2.set_ylabel("Total Probability")
 
-# --------------------------
-# Storage
-# --------------------------
+
 times = []
 probs = []
 
-# --------------------------
-# Main Evolution Loop
-# --------------------------
+
 for step in range(total_steps):
 
     # First half potential step
@@ -236,9 +207,7 @@ for step in range(total_steps):
         fig.canvas.draw_idle()
         plt.pause(0.001)
 
-# --------------------------
-# Finish
-# --------------------------
+
 plt.ioff()
 plt.show()
 
